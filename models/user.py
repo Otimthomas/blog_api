@@ -8,7 +8,6 @@ class UserModel(db.Model):
     email = db.Column(db.String(80))
     password = db.Column(db.String(80))
 
-    #blogposts = db.relationship('BlogModel', backref='users', lazy=True)
 
     def __init__(self, name, email, password):
         self.name = name
