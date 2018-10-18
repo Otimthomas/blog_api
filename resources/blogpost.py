@@ -12,12 +12,6 @@ class Blog(Resource):
         required=True,
         help='This field cannot be left blank'
     )
-    """
-    parser.add_argument('user_id',
-        type=int,
-        required=True,
-        help='A user id is required'
-    )"""
 
     def get(self, title):
         blog = BlogPostModel.find_by_title(title)
@@ -55,8 +49,8 @@ class Blog(Resource):
         if blog is None:
             blog = BlogPostModel(title, **data)
         else:
-            blog.content = BlogModel['content']
-            blog.author = BlogModel['author']
+            blog.body = data['body']
+            blog.author = data['author']
 
         blog.save_to_db()
         return blog.json()
