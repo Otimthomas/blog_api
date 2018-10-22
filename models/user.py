@@ -8,6 +8,8 @@ class UserModel(db.Model):
     email = db.Column(db.String(80))
     password = db.Column(db.String(80))
 
+    blog = db.relationship('BlogPostModel', lazy='dynamic')
+
 
     def __init__(self, name, email, password):
         self.name = name
@@ -15,10 +17,7 @@ class UserModel(db.Model):
         self.password = password
 
     def json(self):
-        return {'name': self.name,
-            'email': self.email,
-            'password': self.password
-        }
+        return {'name': self.name, 'email': self.email, 'password': self.password, 'Blogs': [blog.json() for blog in self.blog.all()]}
 
 
     def save_to_db(self):

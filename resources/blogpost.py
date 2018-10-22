@@ -12,6 +12,11 @@ class Blog(Resource):
         required=True,
         help='This field cannot be left blank'
     )
+    parser.add_argument('user_id',
+        type=int,
+        required=True,
+        help='Every blog requires a user_id'
+    )
 
     def get(self, title):
         blog = BlogPostModel.find_by_title(title)
@@ -20,17 +25,17 @@ class Blog(Resource):
         return {'message': 'Blog was not found'}
 
     def post(self, title):
+        data = Blog.parser.parse_args()
         blog = BlogPostModel.find_by_title(title)
         if blog:
             return {'message': 'A blog with that title already exits.'}, 400
         else:
-            data = Blog.parser.parse_args()
             blog = BlogPostModel(title, **data)
 
-            try:
-                blog.save_to_db()
-            except:
-                return {'message': 'An error occurred while creating the blog'}, 500
+        try:
+            blog.save_to_db()
+        except:
+            return {'message': 'An error occurred while creating the blog'}, 500
 
         return blog.json(), 201
 

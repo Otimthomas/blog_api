@@ -8,11 +8,15 @@ class BlogPostModel(db.Model):
     body = db.Column(db.Text)
     author = db.Column(db.String(100))
 
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('UserModel')
 
-    def __init__(self, title, body, author):
+
+    def __init__(self, title, body, author, user_id):
         self.title = title
         self.body = body
         self.author = author
+        self.user_id = user_id
 
 
     def json(self):
