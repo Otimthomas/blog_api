@@ -1,4 +1,4 @@
-python==3.6.5
-flask==1.0.2
-flask-restful
-flask-sqlalchmey
+Flask
+Flask-RESTful
+Flask-SQLAlchemy
+uwsgi
